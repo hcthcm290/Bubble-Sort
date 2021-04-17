@@ -22,10 +22,17 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Ins().isGameOver) return;
+
+
         if(spawnTimer.Ready())
         {
             spawnTimer.Tick();
-            Spawn();
+
+            if(!GameManager.Ins().isGameOver)
+            {
+                Spawn();
+            }
         }
     }
 
