@@ -10,6 +10,26 @@ public class PlayerMove : MonoBehaviour
 
     [SerializeField]
     bool beingDrag = false;
+    public bool BeingDrag
+    {
+        get
+        {
+            return beingDrag;
+        }
+        set
+        {
+            if(value == true)
+            {
+                body.bodyType = RigidbodyType2D.Kinematic;
+            }
+            else
+            {
+                body.bodyType = RigidbodyType2D.Dynamic;
+            }
+            beingDrag = value;
+
+        }
+    }
     [SerializeField]
     Vector2 offset;
     Vector3 prevMousePosition;
@@ -19,10 +39,28 @@ public class PlayerMove : MonoBehaviour
     public bool isInside = false;
     private Basket basket;
 
+    [SerializeField]
+    SpriteRenderer sprite;
+
+    private Timer lifeTime;
+
+    private Timer delayBlink;
+    private Timer blink;
+
     // Start is called before the first frame update
     void Start()
     {
         body.velocity = direction.normalized * speed;
+        lifeTime = gameObject.AddComponent<Timer>();
+        lifeTime.interval = 5;
+
+        delayBlink = gameObject.AddComponent<Timer>();
+        delayBlink.interval = 5;
+        delayBlink.StartCount();
+
+
+        blink = gameObject.AddComponent<Timer>();
+        blink.interval = 0.3f;
 
     }
 
@@ -47,7 +85,6 @@ public class PlayerMove : MonoBehaviour
         if(beingDrag)
         {
             transform.position = offset + (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
             if(!Input.GetMouseButton(0))
             {
                 beingDrag = false;
@@ -64,18 +101,31 @@ public class PlayerMove : MonoBehaviour
         {
             body.velocity = body.velocity.normalized * speed;
         }
+       
+        if(delayBlink.Ready())
+        {
+            //start blinking
+            DoBlink();
 
+            if(lifeTime.hasStart == false)
+            {
+                lifeTime.StartCount();
+            }
+        }
+
+        if(lifeTime.Ready())
+        {
+            Debug.Log("You Losed");
+        }
     }
 
-    private void OnMouseOver()
+    void DoBlink()
     {
-        if(Input.GetMouseButton(0) && !beingDrag && !isInside)
+        if(blink.Ready())
         {
-            beingDrag = true;
-
-            offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            body.velocity = Vector3.zero;
+            blink.interval *= 0.9f;
+            sprite.enabled = !sprite.enabled;
+            blink.Tick();
         }
     }
 
@@ -116,6 +166,7 @@ public class PlayerMove : MonoBehaviour
 
             basket.playersInside.Add(this);
 
+            Score._ins.score += 1;
             Debug.Log("Scored");
         }
     }
