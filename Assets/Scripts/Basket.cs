@@ -25,4 +25,14 @@ public class Basket : MonoBehaviour
     void Update()
     {
     }
+
+    public void Explode()
+    {
+        foreach(var player in playersInside)
+        {
+            player.Explode();
+        }
+    }
+
+
 }

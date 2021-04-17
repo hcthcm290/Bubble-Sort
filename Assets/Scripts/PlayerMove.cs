@@ -201,15 +201,16 @@ public class PlayerMove : MonoBehaviour
     {
         if(basket != null)
         {
-            isInside = true;
-
             /// Game Over ///
             // this is when you drop bubble to the wrong basket
             if(type != basket.type)
             {
+                basket.Explode();
                 GameManager.Ins().TriggerGameOver();
                 return;
             }
+
+            isInside = true;
 
             // make it fly
             direction.x = Random.Range(-1.0f, 1.0f);
