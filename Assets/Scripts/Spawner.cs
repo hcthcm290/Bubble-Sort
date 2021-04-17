@@ -11,7 +11,6 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     int y_dir;
 
-
     // Start is called before the first frame update
     void Start()
     {
