@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6022753722072492804}
   - component: {fileID: -7649750182505083376}
   - component: {fileID: 5856349921176078229}
+  - component: {fileID: 1741134629}
   m_Layer: 6
   m_Name: blue player
   m_TagString: Untagged
@@ -119,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ffd216911f87f449419f8cf5dbbdfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 1.5, y: -2.1, z: 0}
+  direction: {x: 0, y: 0, z: 0}
   speed: 4
   body: {fileID: 6022753722072492805}
   beingDrag: 0
@@ -127,6 +128,7 @@ MonoBehaviour:
   type: 0
   isInside: 0
   sprite: {fileID: 6022753722072492827}
+  splodeAnimator: {fileID: 1741134629}
 --- !u!58 &-7649750182505083376
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -159,3 +161,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.020459892}
   serializedVersion: 2
   m_Radius: 2.0695777
+--- !u!95 &1741134629
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6022753722072492807}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5dd0599270a246642b8fa713d3f3c81f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

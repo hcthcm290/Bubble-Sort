@@ -19,7 +19,10 @@ class Timer: MonoBehaviour
 
     public void Update()
     {
-        count += Time.deltaTime;
+        if (hasStart)
+        {
+            count += Time.deltaTime;
+        }
     }
 
     public bool Ready()

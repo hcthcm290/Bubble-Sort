@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7212036701965289364}
   - component: {fileID: 1415961966778753772}
   - component: {fileID: 2418276706900750953}
+  - component: {fileID: 5534444450221731526}
   m_Layer: 6
   m_Name: red player
   m_TagString: Untagged
@@ -127,6 +128,7 @@ MonoBehaviour:
   type: 1
   isInside: 0
   sprite: {fileID: 7212036701965289353}
+  splodeAnimator: {fileID: 5534444450221731526}
 --- !u!58 &1415961966778753772
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -159,3 +161,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.020459892}
   serializedVersion: 2
   m_Radius: 2.0695777
+--- !u!95 &5534444450221731526
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7212036701965289366}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a4dd1989595e76c4ab6c5aab9c4c56b3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

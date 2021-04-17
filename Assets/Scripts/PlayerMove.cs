@@ -65,23 +65,27 @@ public class PlayerMove : MonoBehaviour
 
     private Timer delayBlink;
     private Timer blink;
+
+    float blinkShow = 0.15f;
     #endregion
 
     PlayerState state;
+
+    [SerializeField] Animator splodeAnimator;
 
     // Start is called before the first frame update
     void Start()
     {
         body.velocity = direction.normalized * speed;
         lifeTime = gameObject.AddComponent<Timer>();
-        lifeTime.interval = 8;
+        lifeTime.interval = 2;
 
         delayBlink = gameObject.AddComponent<Timer>();
         delayBlink.interval = 8;
         delayBlink.StartCount();
 
         blink = gameObject.AddComponent<Timer>();
-        blink.interval = 0.3f;
+        blink.interval = blinkShow;
 
         GameManager.Ins().GameOver += HandleGameOver;
         state = PlayerState.freeMove;
@@ -147,6 +151,9 @@ public class PlayerMove : MonoBehaviour
     {
         if (delayBlink.Ready())
         {
+            if (!blink.hasStart)
+                blink.StartCount();
+
             //start blinking
             DoBlink();
 
@@ -166,13 +173,13 @@ public class PlayerMove : MonoBehaviour
 
     void UpdateExplode()
     {
-
+        body.velocity = Vector3.zero;
     }
     #endregion
 
     void DoBlink()
     {
-        if(blink.Ready())
+        if (blink.Ready())
         {
             blink.interval *= 0.9f;
             sprite.enabled = !sprite.enabled;
@@ -233,6 +240,12 @@ public class PlayerMove : MonoBehaviour
     public void Explode()
     {
         state = PlayerState.Explode;
+        sprite.enabled = true;
+        splodeAnimator.enabled = true;
+    }
+
+    public void Destroy()
+    {
         Destroy(gameObject);
     }
 
