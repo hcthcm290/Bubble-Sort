@@ -26,13 +26,18 @@ public class Basket : MonoBehaviour
     {
     }
 
-    public void Explode()
+    public void Explode(float delay)
     {
-        foreach(var player in playersInside)
+        StartCoroutine(RealExplode(delay));
+    }
+
+    private IEnumerator RealExplode(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        foreach (var player in playersInside)
         {
             player.Explode();
         }
     }
-
-
 }

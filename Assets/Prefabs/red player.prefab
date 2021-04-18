@@ -129,6 +129,7 @@ MonoBehaviour:
   isInside: 0
   sprite: {fileID: 7212036701965289353}
   splodeAnimator: {fileID: 5534444450221731526}
+  delayGameOver: 1.5
 --- !u!58 &1415961966778753772
 CircleCollider2D:
   m_ObjectHideFlags: 0

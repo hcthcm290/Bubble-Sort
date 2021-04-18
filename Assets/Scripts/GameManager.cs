@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
 
-class GameManager
+class GameManager: MonoBehaviour
 {
     #region SingleTon
     private static GameManager _ins;
@@ -17,7 +16,8 @@ class GameManager
     {
         if(_ins == null)
         {
-            _ins = new GameManager();
+            GameObject gameObject = new GameObject("Game Manager");
+            _ins = gameObject.AddComponent<GameManager>();
         }
         return _ins;
     }
@@ -26,11 +26,24 @@ class GameManager
     public bool isGameOver = false;
     public delegate void ReceiveGameOver();
     public event ReceiveGameOver GameOver;
+    public delegate void ReceiveGamePause();
+    public event ReceiveGamePause GamePause;
+    public delegate void ReceiveGameContinue();
+    public event ReceiveGameContinue GameContinue;
 
 
-    public void TriggerGameOver()
+    public void TriggerGameOver(float delay)
     {
+        GamePause.Invoke();
+        StartCoroutine(TriggerRealGameOver(delay));
+    }
+
+    private IEnumerator TriggerRealGameOver(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
         isGameOver = true;
         GameOver.Invoke();
+
     }
 }

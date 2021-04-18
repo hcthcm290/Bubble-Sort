@@ -17,6 +17,9 @@ public class Spawner : MonoBehaviour
         spawnTimer = gameObject.AddComponent<Timer>();
         spawnTimer.interval = 3;
         spawnTimer.StartCount();
+
+        GameManager.Ins().GamePause += HandleGamePause;
+        GameManager.Ins().GameContinue += HandleGameUnpause;
     }
 
     // Update is called once per frame
@@ -45,5 +48,15 @@ public class Spawner : MonoBehaviour
         newP.direction.x = Random.Range(-1.0f, 1.0f);
         newP.direction.y = y_dir*Random.Range(0.5f, 1.0f);
 
+    }
+
+    public void HandleGamePause()
+    {
+        spawnTimer.Pause();
+    }
+
+    public void HandleGameUnpause()
+    {
+        spawnTimer.UnPause();
     }
 }

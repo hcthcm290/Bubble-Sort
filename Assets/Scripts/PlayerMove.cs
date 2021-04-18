@@ -8,6 +8,7 @@ enum PlayerState
     beingDrag,
     limitedMove,
     Explode,
+    Freeze,
 }
 
 public class PlayerMove : MonoBehaviour
@@ -70,8 +71,12 @@ public class PlayerMove : MonoBehaviour
     #endregion
 
     PlayerState state;
+    PlayerState prevState;
+
+    Vector3 prevVelocity;
 
     [SerializeField] Animator splodeAnimator;
+    [SerializeField] float delayGameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +93,8 @@ public class PlayerMove : MonoBehaviour
         blink.interval = blinkShow;
 
         GameManager.Ins().GameOver += HandleGameOver;
+        GameManager.Ins().GamePause += HandleGamePause;
+        GameManager.Ins().GameContinue += HandleGameUnpause;
         state = PlayerState.freeMove;
     }
 
@@ -111,6 +118,10 @@ public class PlayerMove : MonoBehaviour
         else if(state == PlayerState.Explode)
         {
             UpdateExplode();
+        }
+        else if(state == PlayerState.Freeze)
+        {
+            return;
         }
 
     }
@@ -167,7 +178,7 @@ public class PlayerMove : MonoBehaviour
         /// This is when you don't drop the bubble to the right basket in time
         if (lifeTime.Ready())
         {
-            GameManager.Ins().TriggerGameOver();
+            StartCoroutine(HandleTimeout());
         }
     }
 
@@ -190,6 +201,7 @@ public class PlayerMove : MonoBehaviour
     #region Stuff
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (state != PlayerState.beingDrag) return;
         if(collision.gameObject.tag == "basket")
         {
             basket = collision.GetComponent<Basket>();
@@ -198,6 +210,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (state != PlayerState.beingDrag) return;
         if (collision.gameObject.tag == "basket" && !isInside)
         {
             basket = null;
@@ -212,8 +225,7 @@ public class PlayerMove : MonoBehaviour
             // this is when you drop bubble to the wrong basket
             if(type != basket.type)
             {
-                basket.Explode();
-                GameManager.Ins().TriggerGameOver();
+                StartCoroutine(HandleWrongBasket());
                 return;
             }
 
@@ -244,8 +256,30 @@ public class PlayerMove : MonoBehaviour
         splodeAnimator.enabled = true;
     }
 
+    public void HandleGamePause()
+    {
+        if (state == PlayerState.Explode) return;
+
+        prevState = state;
+        state = PlayerState.Freeze;
+
+        prevVelocity = body.velocity;
+        body.velocity = Vector3.zero;
+    }
+
+    public void HandleGameUnpause()
+    {
+        prevState = state;
+        state = prevState;
+
+        body.velocity = prevVelocity;
+    }
+
     public void Destroy()
     {
+        GameManager.Ins().GameOver -= HandleGameOver;
+        GameManager.Ins().GamePause -= HandleGamePause;
+        GameManager.Ins().GameContinue -= HandleGameUnpause;
         Destroy(gameObject);
     }
 
@@ -255,5 +289,26 @@ public class PlayerMove : MonoBehaviour
         {
             Explode();
         }
+    }
+
+    private IEnumerator HandleTimeout()
+    {
+        sprite.enabled = true;
+        GameManager.Ins().TriggerGameOver(delayGameOver);
+
+        yield return new WaitForSeconds(0.5f);
+        
+        Explode();
+    }
+
+    private IEnumerator HandleWrongBasket()
+    {
+        sprite.enabled = true;
+        GameManager.Ins().TriggerGameOver(delayGameOver);
+        yield return new WaitForSeconds(0.5f);
+
+        Explode();
+        basket.Explode(delayGameOver - 0.5f);
+
     }
 }

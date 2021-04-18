@@ -11,6 +11,8 @@ class Timer: MonoBehaviour
     public float interval;
     private float count;
 
+    bool pause;
+
     public void StartCount()
     {
         count = 0;
@@ -19,6 +21,7 @@ class Timer: MonoBehaviour
 
     public void Update()
     {
+        if (pause) return;
         if (hasStart)
         {
             count += Time.deltaTime;
@@ -35,4 +38,13 @@ class Timer: MonoBehaviour
         count -= interval;
     }
 
+    public void Pause()
+    {
+        pause = true;
+    }
+
+    public void UnPause()
+    {
+        pause = false;
+    }
 }
