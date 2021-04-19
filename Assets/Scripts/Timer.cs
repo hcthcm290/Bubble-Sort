@@ -9,7 +9,7 @@ class Timer: MonoBehaviour
 {
     public bool hasStart;
     public float interval;
-    private float count;
+    [SerializeField] private float count;
 
     bool pause;
 

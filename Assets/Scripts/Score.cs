@@ -7,8 +7,21 @@ public class Score : MonoBehaviour
 {
     public static Score _ins;
 
-    public int score;
+    private int _score;
+    public int score
+    {
+        get { return _score; }
+        set
+        {
+            _score = value;
+            OnScoreChanged.Invoke(score);
+        }
+    }
     public Text textScore;
+
+    public delegate void ScoreChange(int currentScore);
+    public event ScoreChange OnScoreChanged;
+        
 
     // Start is called before the first frame update
     void Start()

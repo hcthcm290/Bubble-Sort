@@ -463,7 +463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db370181d07997c4982dc2fca92653ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
   textScore: {fileID: 352565036}
 --- !u!1 &396365444
 GameObject:
@@ -522,6 +521,69 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4734561, y: 0.061264038}
   m_EdgeRadius: 0
+--- !u!1 &406214370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 406214372}
+  - component: {fileID: 406214371}
+  m_Layer: 0
+  m_Name: Spawner Down
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &406214371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406214370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59d2ec8957437af4390be9739bd080c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playersPrefab:
+  - {fileID: 6022753722072492804, guid: 2a19845645c0510498867e77f2c5bc07, type: 3}
+  - {fileID: 7212036701965289364, guid: b50fee28ed8768b43b1f80247576bed4, type: 3}
+  y_dir: 1
+  spawnStructure:
+  - score: 0
+    bubbleCount: 0
+    interval: 0.1
+  - score: 7
+    bubbleCount: 1
+    interval: 2.4
+  - score: 12
+    bubbleCount: 2
+    interval: 1.89
+  - score: 21
+    bubbleCount: 3
+    interval: 2
+  - score: 31
+    bubbleCount: 3
+    interval: 1.75
+--- !u!4 &406214372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406214370}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.07, y: -5.12, z: -0.2714081}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,7 +1050,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1396749081
 GameObject:
@@ -1001,7 +1063,7 @@ GameObject:
   - component: {fileID: 1396749083}
   - component: {fileID: 1396749082}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: Spawner Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1023,6 +1085,22 @@ MonoBehaviour:
   - {fileID: 6022753722072492804, guid: 2a19845645c0510498867e77f2c5bc07, type: 3}
   - {fileID: 7212036701965289364, guid: b50fee28ed8768b43b1f80247576bed4, type: 3}
   y_dir: -1
+  spawnStructure:
+  - score: 0
+    bubbleCount: 1
+    interval: 3
+  - score: 4
+    bubbleCount: 1
+    interval: 2.5
+  - score: 10
+    bubbleCount: 2
+    interval: 2.75
+  - score: 20
+    bubbleCount: 2
+    interval: 2
+  - score: 30
+    bubbleCount: 3
+    interval: 2.75
 --- !u!4 &1396749083
 Transform:
   m_ObjectHideFlags: 0

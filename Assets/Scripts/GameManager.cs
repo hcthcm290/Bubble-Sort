@@ -43,7 +43,8 @@ class GameManager: MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         isGameOver = true;
-        GameOver.Invoke();
+        if(GameOver != null)
+            GameOver.Invoke();
 
     }
 }

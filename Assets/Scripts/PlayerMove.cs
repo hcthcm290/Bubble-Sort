@@ -283,6 +283,10 @@ public class PlayerMove : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnDestroy()
+    {
+    }
+
     public void HandleGameOver()
     {
         if(!isInside)
