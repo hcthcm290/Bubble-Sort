@@ -31,10 +31,13 @@ class GameManager: MonoBehaviour
     public delegate void ReceiveGameContinue();
     public event ReceiveGameContinue GameContinue;
 
+    private bool _isPause;
+    public bool isPause { get { return _isPause; } }
+
 
     public void TriggerGameOver(float delay)
     {
-        GamePause.Invoke();
+        Pause();
         StartCoroutine(TriggerRealGameOver(delay));
     }
 
@@ -43,8 +46,19 @@ class GameManager: MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         isGameOver = true;
-        if(GameOver != null)
-            GameOver.Invoke();
+        if (GameOver != null) GameOver.Invoke();
 
+    }
+
+    public void Pause()
+    {
+        _isPause = true;
+        if (GamePause != null) GamePause.Invoke();
+    }
+
+    public void Unpause()
+    {
+        _isPause = false;
+        if (GameContinue != null) GameContinue.Invoke();
     }
 }
