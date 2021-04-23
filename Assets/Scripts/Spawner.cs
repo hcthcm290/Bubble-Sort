@@ -12,6 +12,8 @@ class SpawnStructure
 
 public class Spawner : MonoBehaviour
 {
+    private static int SpawnCount;
+
     [SerializeField]
     List<PlayerMove> playersPrefab;
     Timer spawnTimer;
@@ -96,12 +98,19 @@ public class Spawner : MonoBehaviour
     void Spawn()
     {
         if (playersPrefab.Count == 0) return;
+
+
         int random = Random.Range(0, playersPrefab.Count);
         PlayerMove newP = Instantiate(playersPrefab[random]);
-        newP.transform.position = transform.position;
-        newP.direction.x = Random.Range(-1.0f, 1.0f);
-        newP.direction.y = y_dir*Random.Range(0.5f, 1.0f);
 
+        Vector3 position = transform.position;
+        position.z = -5 + 0.02f * SpawnCount;
+
+        newP.transform.position = position;
+        newP.direction.x = Random.Range(-1.0f, 1.0f);
+        newP.direction.y = y_dir*Random.Range(0.3f, 1.0f);
+        
+        SpawnCount++;
     }
 
     public void HandleGamePause()
