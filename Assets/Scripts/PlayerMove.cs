@@ -34,6 +34,8 @@ public class PlayerMove : MonoBehaviour
             {
                 body.bodyType = RigidbodyType2D.Kinematic;
                 state = PlayerState.beingDrag;
+
+                beforeDragZValue = transform.position.z;
             }
             else
             {
@@ -50,6 +52,7 @@ public class PlayerMove : MonoBehaviour
     public Vector2 offset;
     public int touchID;
     Vector3 prevMousePosition;
+    float beforeDragZValue;
 
     #endregion
 
@@ -136,7 +139,9 @@ public class PlayerMove : MonoBehaviour
 
     void UpdateBeingDrag()
     {
-        transform.position = offset + (Vector2)Camera.main.ScreenToWorldPoint(Input.GetTouch(touchID).position);
+        Vector3 positon = offset + (Vector2)Camera.main.ScreenToWorldPoint(Input.GetTouch(touchID).position);
+        positon.z = -6;
+        transform.position = positon;
 
         if (Input.mousePosition != prevMousePosition)
         {
@@ -231,6 +236,10 @@ public class PlayerMove : MonoBehaviour
                 return;
             }
 
+            Vector3 position = transform.position;
+            position.z += 20;
+            transform.position = position;
+
             isInside = true;
 
             // make it fly
@@ -247,6 +256,12 @@ public class PlayerMove : MonoBehaviour
 
             Score._ins.score += 1;
             Debug.Log("Scored");
+        }
+        else
+        {
+            Vector3 position = transform.position;
+            position.z = beforeDragZValue;
+            transform.position = position;
         }
     }
     #endregion
