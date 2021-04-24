@@ -47,8 +47,10 @@ public class PlayerMove : MonoBehaviour
         }
     }
     [SerializeField]
-    Vector2 offset;
+    public Vector2 offset;
+    public int touchID;
     Vector3 prevMousePosition;
+
     #endregion
 
     [SerializeField] int type;
@@ -134,7 +136,7 @@ public class PlayerMove : MonoBehaviour
 
     void UpdateBeingDrag()
     {
-        transform.position = offset + (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = offset + (Vector2)Camera.main.ScreenToWorldPoint(Input.GetTouch(touchID).position);
 
         if (Input.mousePosition != prevMousePosition)
         {

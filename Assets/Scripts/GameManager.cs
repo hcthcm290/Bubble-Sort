@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 class GameManager: MonoBehaviour
 {
@@ -47,6 +48,9 @@ class GameManager: MonoBehaviour
 
         isGameOver = true;
         if (GameOver != null) GameOver.Invoke();
+
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("TitleScene");
 
     }
 
