@@ -21,6 +21,7 @@ class Timer: MonoBehaviour
 
     public void Update()
     {
+        if (GameManager.Ins().isPause) return;
         if (pause) return;
         if (hasStart)
         {
@@ -35,7 +36,7 @@ class Timer: MonoBehaviour
 
     public void Tick()
     {
-        count -= interval;
+        count = 0;
     }
 
     public void Pause()

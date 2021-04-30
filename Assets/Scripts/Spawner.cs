@@ -26,8 +26,10 @@ public class Spawner : MonoBehaviour
     bool started;
 
     bool notRegisteredToScore;
+    bool notRegisterToGM;
 
     [SerializeField] List<SpawnStructure> spawnStructure;
+
 
     // Start is called before the first frame update
     void Start()
@@ -38,8 +40,12 @@ public class Spawner : MonoBehaviour
         delay.interval = 1;
         delay.StartCount();
 
-        GameManager.Ins().GamePause += HandleGamePause;
-        GameManager.Ins().GameContinue += HandleGameUnpause;
+        if (GameManager.Ins() != null)
+        {
+            GameManager.Ins().GamePause += HandleGamePause;
+            GameManager.Ins().GameContinue += HandleGameUnpause;
+            notRegisterToGM = false;
+        }
 
         if (Score._ins == null)
         {
@@ -61,8 +67,16 @@ public class Spawner : MonoBehaviour
             Score._ins.OnScoreChanged += OnScoreChanged;
             notRegisteredToScore = false;
         }
+        if(notRegisterToGM)
+        {
+            GameManager.Ins().GamePause += HandleGamePause;
+            GameManager.Ins().GameContinue += HandleGameUnpause;
+            notRegisterToGM = false;
+        }
 
         if (GameManager.Ins().isGameOver) return;
+        if (GameManager.Ins().isPause) return;
+
         if(!delay.Ready())
         {
             spawnTimer.Pause();
@@ -81,7 +95,7 @@ public class Spawner : MonoBehaviour
             }
         }
 
-        if(spawnTimer.Ready())
+        if(spawnTimer.Ready() && !GameManager.Ins().isPause)
         {
             spawnTimer.Tick();
 

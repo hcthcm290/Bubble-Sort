@@ -17,7 +17,19 @@ public class Score : MonoBehaviour
             OnScoreChanged.Invoke(score);
         }
     }
+
+    private int _realScore;
+    public int realScore
+    {
+        get { return _realScore; }
+        set
+        {
+            _realScore = value;
+
+        }
+    }
     public Text textScore;
+    public Text realTextScore;
 
     public delegate void ScoreChange(int currentScore);
     public event ScoreChange OnScoreChanged;
@@ -33,5 +45,6 @@ public class Score : MonoBehaviour
     void Update()
     {
         textScore.text = score.ToString();
+        realTextScore.text = realScore.ToString();
     }
 }

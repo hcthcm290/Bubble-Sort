@@ -15,12 +15,12 @@ class GameManager: MonoBehaviour
 
     public static GameManager Ins()
     {
-        if(_ins == null)
-        {
-            GameObject gameObject = new GameObject("Game Manager");
-            _ins = gameObject.AddComponent<GameManager>();
-        }
         return _ins;
+    }
+
+    private void Start()
+    {
+        _ins = this;
     }
     #endregion
 
@@ -65,4 +65,5 @@ class GameManager: MonoBehaviour
         _isPause = false;
         if (GameContinue != null) GameContinue.Invoke();
     }
+
 }

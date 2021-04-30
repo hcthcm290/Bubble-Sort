@@ -106,6 +106,11 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.Ins().isPause && state != PlayerState.Freeze)
+        {
+            HandleGamePause();
+        }
+
         if(state == PlayerState.freeMove)
         {
             UpdateFreeMove();
@@ -254,8 +259,7 @@ public class PlayerMove : MonoBehaviour
 
             basket.playersInside.Add(this);
 
-            Score._ins.score += 1;
-            Debug.Log("Scored");
+            Score._ins.score = Score._ins.score + 1;
         }
         else
         {
@@ -302,6 +306,12 @@ public class PlayerMove : MonoBehaviour
 
     private void OnDestroy()
     {
+        if(GameManager.Ins() != null)
+        {
+            GameManager.Ins().GameOver -= HandleGameOver;
+            GameManager.Ins().GamePause -= HandleGamePause;
+            GameManager.Ins().GameContinue -= HandleGameUnpause;
+        }
     }
 
     public void HandleGameOver()
