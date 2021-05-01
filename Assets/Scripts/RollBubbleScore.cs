@@ -69,7 +69,10 @@ public class RollBubbleScore : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                bubblePaths[i] = bubblesOnPath[i];
+                if(bubblesOnPath[i] != null)
+                {
+                    bubblePaths[i] = bubblesOnPath[i];
+                }
             }
         }
         else

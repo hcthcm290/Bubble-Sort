@@ -5,8 +5,8 @@ using UnityEngine;
 enum BasketState
 {
     Chilling,
-    MoveBubblesOut,
-    MoveBubbleUp,
+    TempScore,
+    FinalScore,
 }
 
 public class Basket : MonoBehaviour
@@ -18,6 +18,10 @@ public class Basket : MonoBehaviour
     private List<List<GameObject>> bubbleOnPath;
 
     BasketState state = BasketState.Chilling;
+
+    bool notRegisterToGM = true;
+
+    [SerializeField] Basket anotherBasket;
 
     // Start is called before the first frame update
     void Start()
@@ -33,13 +37,16 @@ public class Basket : MonoBehaviour
         bubbleOnPath = new List<List<GameObject>>();
         bubbleOnPath.Add(new List<GameObject>());
         bubbleOnPath.Add(new List<GameObject>());
+
+        if(GameManager.Ins() != null)
+        {
+            GameManager.Ins().GameOver += OnGameOver;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
         if(state == BasketState.Chilling)
         {
             if (playersInside.Count == 10)
@@ -52,11 +59,11 @@ public class Basket : MonoBehaviour
 
                 }
 
-                state = BasketState.MoveBubblesOut;
+                state = BasketState.TempScore;
             }
             return;
         }
-        else if(state == BasketState.MoveBubblesOut)
+        else if(state == BasketState.TempScore)
         {
             List<PlayerMove> removeBubbles = new List<PlayerMove>();
 
@@ -78,8 +85,6 @@ public class Basket : MonoBehaviour
                 {
 
                     removeBubbles.Add(bubble);
-                    // TODO
-                    // Add this bubble to result screen to display score
                 }
             }
 
@@ -102,6 +107,84 @@ public class Basket : MonoBehaviour
             if(playersInside.Count == 0)
             {
                 StartCoroutine(StartCountPoint());
+            }
+
+            return;
+        }
+        else if(state == BasketState.FinalScore)
+        {
+            playersInside.RemoveAll(x => x == null);
+            List<PlayerMove> removeBubbles = new List<PlayerMove>();
+
+            foreach (var bubble in playersInside)
+            {
+                if(bubble == null)
+                {
+                    Debug.Log("csacsacsacsaca");
+                }
+                Vector3 position = bubble.transform.position;
+                if (type == 1) // red basket, move bubble to the left
+                {
+
+                    position.x -= 1.5f * Time.deltaTime;
+                }
+                else if (type == 0)  // blue basket, move bubble to the right
+                {
+                    position.x += 1.5f * Time.deltaTime;
+                }
+                bubble.transform.position = position;
+
+                if (position.x <= -3.2 || position.x >= 3.2)
+                {
+
+                    removeBubbles.Add(bubble);
+                }
+            }
+
+            foreach (var bubble in removeBubbles)
+            {
+                playersInside.Remove(bubble);
+
+                if (playersInside.Count % 2 == 0)
+                {
+                    if(type == 1)
+                    {
+                        bubbleOnPath[0].Add(bubble.gameObject);
+                        Destroy(bubble); // This function don't destroy game object, it just destroy the PlayerMove script
+                    }
+                    else
+                    {
+                        bubbleOnPath[2].Add(bubble.gameObject);
+                        Destroy(bubble); // This function don't destroy game object, it just destroy the PlayerMove script
+                    }
+                    
+                }
+                else
+                {
+                    if (type == 1)
+                    {
+                        bubbleOnPath[1].Add(bubble.gameObject);
+                        Destroy(bubble); // This function don't destroy game object, it just destroy the PlayerMove script
+                    }
+                    else
+                    {
+                        bubbleOnPath[3].Add(bubble.gameObject);
+                        Destroy(bubble); // This function don't destroy game object, it just destroy the PlayerMove script
+                    }
+                }
+            }
+
+            if (playersInside.Count == 0 && type == 1)
+            {
+                RollBubbleScore.Ins.SetBubbleOnPath(bubbleOnPath);
+                state = BasketState.Chilling;
+
+            }
+            else if(playersInside.Count == 0 && type == 0 && anotherBasket.playersInside.Count == 0)
+            {
+                RollBubbleScore.Ins.SetBubbleOnPath(bubbleOnPath);
+                RollBubbleScore.Ins.StartRolling();
+                state = BasketState.Chilling;
             }
 
             return;
@@ -130,6 +213,41 @@ public class Basket : MonoBehaviour
         foreach (var player in playersInside)
         {
             player.Explode();
+        }
+    }
+
+    void OnGameOver()
+    {
+        StartCoroutine(OnGameOverDelay());
+    }
+
+    IEnumerator OnGameOverDelay()
+    {
+        yield return new WaitForSeconds(0.6f);
+
+        state = BasketState.FinalScore;
+        bubbleOnPath.Clear();
+        for (int i = 0; i < 4; i++)
+        {
+            bubbleOnPath.Add(null);
+        }
+
+        if (type == 0)
+        {
+            bubbleOnPath[2] = new List<GameObject>();
+            bubbleOnPath[3] = new List<GameObject>();
+        }
+        else if (type == 1)
+        {
+            bubbleOnPath[0] = new List<GameObject>();
+            bubbleOnPath[1] = new List<GameObject>();
+        }
+
+        playersInside.RemoveAll(x => x == null);
+
+        foreach (var bubble in playersInside)
+        {
+            bubble.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         }
     }
 }

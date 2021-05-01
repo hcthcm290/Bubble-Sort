@@ -21,7 +21,6 @@ public class DragAndDrop : MonoBehaviour
 
             if (touch.phase == TouchPhase.Began && !GameManager.Ins().isPause)
             {
-                Debug.Log("Pressed");
                 Catch(0);
             }
 

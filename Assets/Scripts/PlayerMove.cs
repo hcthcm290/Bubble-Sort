@@ -325,19 +325,20 @@ public class PlayerMove : MonoBehaviour
     private IEnumerator HandleTimeout()
     {
         sprite.enabled = true;
-        GameManager.Ins().TriggerGameOver(delayGameOver);
 
         yield return new WaitForSeconds(0.5f);
-        
+        GameManager.Ins().TriggerGameOver(delayGameOver);
+
         Explode();
     }
 
     private IEnumerator HandleWrongBasket()
     {
         sprite.enabled = true;
-        GameManager.Ins().TriggerGameOver(delayGameOver);
+        GameManager.Ins().Pause();
         yield return new WaitForSeconds(0.5f);
 
+        GameManager.Ins().TriggerGameOver(delayGameOver);
         Explode();
         basket.Explode(delayGameOver - 0.5f);
 

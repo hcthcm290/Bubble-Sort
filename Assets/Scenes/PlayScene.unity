@@ -1751,6 +1751,7 @@ MonoBehaviour:
     height: 0
   type: 1
   playersInside: []
+  anotherBasket: {fileID: 1758586062}
 --- !u!1 &1665137317
 GameObject:
   m_ObjectHideFlags: 0
@@ -2201,6 +2202,7 @@ MonoBehaviour:
     height: 0
   type: 0
   playersInside: []
+  anotherBasket: {fileID: 1607927744}
 --- !u!61 &1758586063
 BoxCollider2D:
   m_ObjectHideFlags: 0
