@@ -17,6 +17,7 @@ public class RollBubbleScore : MonoBehaviour
     public List<List<GameObject>> bubblePaths;
     bool started = false;
     [SerializeField] List<Transform> listStartPosition;
+    [SerializeField] ScoreBoard scoreBoard;
 
     private void Start()
     {
@@ -52,6 +53,11 @@ public class RollBubbleScore : MonoBehaviour
         if(count == 4) // all path clear its bubble
         {
             OnRollingFinish?.Invoke();
+            started = false;
+            if(GameManager.Ins().isGameOver)
+            {
+                scoreBoard.Activate(Score._ins.realScore);
+            }
         }
     }
 

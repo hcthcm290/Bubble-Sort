@@ -48,10 +48,6 @@ class GameManager: MonoBehaviour
 
         isGameOver = true;
         if (GameOver != null) GameOver.Invoke();
-
-        yield return new WaitForSeconds(8);
-        SceneManager.LoadScene("TitleScene");
-
     }
 
     public void Pause()
