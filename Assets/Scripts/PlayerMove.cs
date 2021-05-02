@@ -83,6 +83,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] Animator splodeAnimator;
     [SerializeField] float delayGameOver;
 
+    bool notRegisterToGM = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -97,15 +99,30 @@ public class PlayerMove : MonoBehaviour
         blink = gameObject.AddComponent<Timer>();
         blink.interval = blinkShow;
 
-        GameManager.Ins().GameOver += HandleGameOver;
-        GameManager.Ins().GamePause += HandleGamePause;
-        GameManager.Ins().GameContinue += HandleGameUnpause;
+        if(GameManager.Ins() != null)
+        {
+            GameManager.Ins().GameOver += HandleGameOver;
+            GameManager.Ins().GamePause += HandleGamePause;
+            GameManager.Ins().GameContinue += HandleGameUnpause;
+
+            notRegisterToGM = false;
+        }
+        
         state = PlayerState.freeMove;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(notRegisterToGM)
+        {
+            GameManager.Ins().GameOver += HandleGameOver;
+            GameManager.Ins().GamePause += HandleGamePause;
+            GameManager.Ins().GameContinue += HandleGameUnpause;
+
+            notRegisterToGM = true;
+        }
+
         if(GameManager.Ins().isPause && state != PlayerState.Freeze)
         {
             HandleGamePause();
@@ -273,8 +290,8 @@ public class PlayerMove : MonoBehaviour
     public void Explode()
     {
         state = PlayerState.Explode;
-        sprite.enabled = true;
-        splodeAnimator.enabled = true;
+        if(sprite != null) sprite.enabled = true;
+        if(splodeAnimator != null) splodeAnimator.enabled = true;
     }
 
     public void HandleGamePause()

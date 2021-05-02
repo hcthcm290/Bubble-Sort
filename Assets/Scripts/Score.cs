@@ -14,7 +14,7 @@ public class Score : MonoBehaviour
         set
         {
             _score = value;
-            OnScoreChanged.Invoke(score);
+            OnScoreChanged?.Invoke(score);
         }
     }
 
