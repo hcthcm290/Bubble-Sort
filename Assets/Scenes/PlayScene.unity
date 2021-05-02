@@ -799,13 +799,13 @@ MonoBehaviour:
     interval: 5
   - score: 32
     bubbleCount: 2
-    interval: 1.75
+    interval: 2.3
   - score: 40
     bubbleCount: 3
     interval: 5
   - score: 41
     bubbleCount: 2
-    interval: 1.6
+    interval: 2.3
 --- !u!4 &406214372
 Transform:
   m_ObjectHideFlags: 0
@@ -1802,13 +1802,13 @@ MonoBehaviour:
     interval: 9
   - score: 35
     bubbleCount: 2
-    interval: 2.5
+    interval: 3
   - score: 37
     bubbleCount: 1
     interval: 1.2
   - score: 38
     bubbleCount: 2
-    interval: 2.4
+    interval: 2.7
   - score: 46
     bubbleCount: 3
     interval: 5
