@@ -127,6 +127,10 @@ public class PlayerMove : MonoBehaviour
         {
             HandleGamePause();
         }
+        if(!GameManager.Ins().isPause && state == PlayerState.Freeze)
+        {
+            
+        }
 
         if(state == PlayerState.freeMove)
         {
@@ -307,8 +311,10 @@ public class PlayerMove : MonoBehaviour
 
     public void HandleGameUnpause()
     {
-        prevState = state;
-        state = prevState;
+        if (basket == null)
+            state = PlayerState.freeMove;
+        else
+            state = PlayerState.limitedMove;
 
         body.velocity = prevVelocity;
     }
