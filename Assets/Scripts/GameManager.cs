@@ -31,10 +31,22 @@ class GameManager: MonoBehaviour
     public event ReceiveGamePause GamePause;
     public delegate void ReceiveGameContinue();
     public event ReceiveGameContinue GameContinue;
-
     private bool _isPause;
     public bool isPause { get { return _isPause; } }
 
+    [SerializeField] AudioSource backgroundSound;
+
+    private void Update()
+    {
+        if(isPause || isGameOver)
+        {
+            backgroundSound.volume = 0.2f;
+        }
+        else
+        {
+            backgroundSound.volume = 0.4f;
+        }
+    }
 
     public void TriggerGameOver(float delay)
     {

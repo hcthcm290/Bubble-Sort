@@ -20,6 +20,7 @@ public class RollBubbleScore : MonoBehaviour
     [SerializeField] ScoreBoard scoreBoard;
 
     [SerializeField] List<Animator> listConveyor;
+    [SerializeField] AudioSource movingSound;
 
     private void Start()
     {
@@ -52,10 +53,12 @@ public class RollBubbleScore : MonoBehaviour
             }
         }
 
-        if(count == 4) // all path clear its bubble
+        if(count == 4 && started) // all path clear its bubble
         {
+            movingSound.Stop();
             OnRollingFinish?.Invoke();
             started = false;
+
             if(GameManager.Ins().isGameOver)
             {
                 scoreBoard.Activate(Score._ins.realScore);
@@ -97,6 +100,11 @@ public class RollBubbleScore : MonoBehaviour
 
     public void StartRolling()
     {
+        if(!started)
+        {
+            movingSound.Play();
+        }
+
         started = true;
 
         for(int i=0; i<bubblePaths.Count; i++)

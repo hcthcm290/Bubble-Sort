@@ -22,6 +22,7 @@ public class Basket : MonoBehaviour
     bool notRegisterToGM = true;
 
     [SerializeField] Basket anotherBasket;
+    [SerializeField] AudioSource whistle;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +50,7 @@ public class Basket : MonoBehaviour
     {
         if(state == BasketState.Chilling)
         {
-            if (playersInside.Count == 10)
+            if (playersInside.Count == 20)
             {
                 GameManager.Ins().Pause();
 
@@ -60,6 +61,7 @@ public class Basket : MonoBehaviour
                 }
 
                 state = BasketState.TempScore;
+                whistle.Play();
             }
             return;
         }
@@ -77,7 +79,7 @@ public class Basket : MonoBehaviour
                 }
                 else if(type == 0)  // blue basket, move bubble to the right
                 {
-                    position.x += 1.5f * Time.deltaTime;
+                    position.x += 1.2f * Time.deltaTime;
                 }
                 bubble.transform.position = position;
 
@@ -92,7 +94,7 @@ public class Basket : MonoBehaviour
             {
                 playersInside.Remove(bubble);
 
-                if(bubbleOnPath[0].Count < 5)
+                if(bubbleOnPath[0].Count < 10)
                 {
                     bubbleOnPath[0].Add(bubble.gameObject);
                     Destroy(bubble); // This function don't destroy game object, it just destroy the PlayerMove script

@@ -75,6 +75,11 @@ public class PlayerMove : MonoBehaviour
     float blinkShow = 0.15f;
     #endregion
 
+    #region Sound
+    [SerializeField] AudioSource popSound;
+    [SerializeField] AudioSource whooshSound;
+    #endregion
+
     PlayerState state;
     PlayerState prevState;
 
@@ -238,6 +243,7 @@ public class PlayerMove : MonoBehaviour
         if(collision.gameObject.tag == "basket")
         {
             basket = collision.GetComponent<Basket>();
+            whooshSound.Play();
         }
     }
 
@@ -247,6 +253,7 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.tag == "basket" && !isInside)
         {
             basket = null;
+            whooshSound.Play();
         }
     }
 
@@ -293,6 +300,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Explode()
     {
+        if (state != PlayerState.Explode) popSound.Play();
         state = PlayerState.Explode;
         if(sprite != null) sprite.enabled = true;
         if(splodeAnimator != null) splodeAnimator.enabled = true;
