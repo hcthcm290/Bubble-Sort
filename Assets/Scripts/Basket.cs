@@ -150,12 +150,10 @@ public class Basket : MonoBehaviour
                     if(type == 1)
                     {
                         bubbleOnPath[0].Add(bubble.gameObject);
-                        Destroy(bubble); // This function don't destroy game object, it just destroy the PlayerMove script
                     }
                     else
                     {
                         bubbleOnPath[2].Add(bubble.gameObject);
-                        Destroy(bubble); // This function don't destroy game object, it just destroy the PlayerMove script
                     }
                     
                 }
@@ -164,14 +162,13 @@ public class Basket : MonoBehaviour
                     if (type == 1)
                     {
                         bubbleOnPath[1].Add(bubble.gameObject);
-                        Destroy(bubble); // This function don't destroy game object, it just destroy the PlayerMove script
                     }
                     else
                     {
                         bubbleOnPath[3].Add(bubble.gameObject);
-                        Destroy(bubble); // This function don't destroy game object, it just destroy the PlayerMove script
                     }
                 }
+                Destroy(bubble); // This function don't destroy game object, it just destroy the PlayerMove script
             }
 
             if (playersInside.Count == 0 && type == 1)

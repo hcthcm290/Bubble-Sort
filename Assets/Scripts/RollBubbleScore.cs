@@ -19,6 +19,8 @@ public class RollBubbleScore : MonoBehaviour
     [SerializeField] List<Transform> listStartPosition;
     [SerializeField] ScoreBoard scoreBoard;
 
+    [SerializeField] List<Animator> listConveyor;
+
     private void Start()
     {
         _ins = this;
@@ -58,6 +60,10 @@ public class RollBubbleScore : MonoBehaviour
             {
                 scoreBoard.Activate(Score._ins.realScore);
             }
+            for (int i = 0; i < listConveyor.Count; i++)
+            {
+                listConveyor[i].enabled = false;
+            }
         }
     }
 
@@ -92,6 +98,15 @@ public class RollBubbleScore : MonoBehaviour
     public void StartRolling()
     {
         started = true;
+
+        for(int i=0; i<bubblePaths.Count; i++)
+        {
+            if (i >= listConveyor.Count) continue;
+            if (bubblePaths[i].Count > 0)
+            {
+                listConveyor[i].enabled = true;
+            }
+        }
     }
 
     private void InitializeBubblePosition()
@@ -103,7 +118,14 @@ public class RollBubbleScore : MonoBehaviour
                 var bubble = bubblePaths[iPath][ibb];
                 bubble.transform.position = listStartPosition[iPath].position - new Vector3(0, 1f, 0) * ibb;
                 bubble.GetComponent<SpriteRenderer>().sortingLayerName = "Default";
-                
+                bubble.GetComponent<SpriteRenderer>().maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                bubble.GetComponent<SpriteRenderer>().sortingOrder = 2;
+
+                Vector3 scale = bubble.transform.localScale;
+                scale.x *= 0.6f;
+                scale.y *= 0.6f;
+
+                bubble.transform.localScale = scale;
             }
         }
     }
