@@ -47,7 +47,7 @@ public class RollBubbleScore : MonoBehaviour
             foreach(var bubble in path)
             {
                 Vector3 position = bubble.transform.position;
-                position.y += 5 * Time.deltaTime;
+                position.y += 2.75f * Time.deltaTime;
                 bubble.transform.position = position;
             }
         }
@@ -122,8 +122,8 @@ public class RollBubbleScore : MonoBehaviour
                 bubble.GetComponent<SpriteRenderer>().sortingOrder = 2;
 
                 Vector3 scale = bubble.transform.localScale;
-                scale.x *= 0.6f;
-                scale.y *= 0.6f;
+                scale.x = 0.5f;
+                scale.y = 0.5f;
 
                 bubble.transform.localScale = scale;
             }

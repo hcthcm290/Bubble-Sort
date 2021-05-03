@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -7649750182505083376}
   - component: {fileID: 1741134629}
   m_Layer: 6
-  m_Name: blue player
+  m_Name: black player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 6022753722072492807}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.68, y: -1.14, z: 0}
-  m_LocalScale: {x: 0.14, y: 0.14, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 1567853513
   m_SortingLayer: 1
   m_SortingOrder: -3
-  m_Sprite: {fileID: 21300000, guid: dffcc54265082a646bfe16f9e6d4cf11, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5477395bd370fa4c8f736078703eca3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,9 +98,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.5
+  m_Mass: 0.2
+  m_LinearDrag: 1.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 8f428f288f12ab241bae895d0eeec9b5, type: 2}
   m_Interpolate: 1
@@ -143,9 +143,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.010867204, y: -0.08296626}
+  m_Offset: {x: -0.0034350157, y: -0.00024710383}
   serializedVersion: 2
-  m_Radius: 2.9895413
+  m_Radius: 0.5680151
 --- !u!95 &1741134629
 Animator:
   serializedVersion: 3

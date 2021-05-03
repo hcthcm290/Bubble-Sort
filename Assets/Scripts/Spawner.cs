@@ -22,6 +22,9 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     int y_dir;
 
+    [SerializeField]
+    Animator coveyor;
+
     int bubbleSpawnCount;
     bool started;
 
@@ -74,8 +77,29 @@ public class Spawner : MonoBehaviour
             notRegisterToGM = false;
         }
 
-        if (GameManager.Ins().isGameOver) return;
-        if (GameManager.Ins().isPause) return;
+        if (GameManager.Ins().isGameOver)
+        {
+            coveyor.speed = 0;
+            return;
+        }
+        else if (GameManager.Ins().isPause)
+        {
+            coveyor.speed = 0;
+            return;
+        }
+        
+        if(bubbleSpawnCount > 0)
+        {
+            coveyor.gameObject.SetActive(true);
+            coveyor.enabled = true;
+            coveyor.speed = 1;
+        }
+        else
+        {
+            coveyor.gameObject.SetActive(false);
+        }
+
+
 
         if(!delay.Ready())
         {
