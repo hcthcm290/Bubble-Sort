@@ -45,6 +45,12 @@ public class Score : MonoBehaviour
     void Update()
     {
         textScore.text = score.ToString();
-        realTextScore.text = realScore.ToString();
+
+        string scoreString = realScore.ToString();
+
+        int charCount = Mathf.Clamp(scoreString.Length, 2, int.MaxValue);
+        scoreString = "00" + scoreString;
+
+        realTextScore.text = scoreString.Substring(scoreString.Length - charCount);
     }
 }

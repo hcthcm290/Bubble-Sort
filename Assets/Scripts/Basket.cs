@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 enum BasketState
 {
@@ -23,6 +24,7 @@ public class Basket : MonoBehaviour
 
     [SerializeField] Basket anotherBasket;
     [SerializeField] AudioSource whistle;
+    [SerializeField] Text score;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +52,11 @@ public class Basket : MonoBehaviour
     {
         if(state == BasketState.Chilling)
         {
+            if (score != null)
+            {
+                score.text = playersInside.Count.ToString() + "/20";
+            }
+
             if (playersInside.Count == 20)
             {
                 GameManager.Ins().Pause();
