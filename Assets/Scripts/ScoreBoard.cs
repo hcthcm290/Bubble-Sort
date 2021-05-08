@@ -8,7 +8,7 @@ public class ScoreBoard : MonoBehaviour
 {
     [SerializeField] List<Text> listTxtScore;
     [SerializeField] Text lowTxtScore;
-
+    [SerializeField] Text txtHighScore;
     bool activated;
     int highlightIndex;
 
@@ -103,9 +103,12 @@ public class ScoreBoard : MonoBehaviour
 
     private IEnumerator ShowTheScore()
     {
+        txtHighScore.enabled = true;
+
         for(int i = 0; i < listTxtScore.Count; i++)
         {
             yield return new WaitForSeconds(0.5f);
+            listTxtScore[i].gameObject.SetActive(true);
             listTxtScore[i].enabled = true;
         }
 
